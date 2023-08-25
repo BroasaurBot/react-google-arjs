@@ -1,0 +1,14 @@
+h1 { 
+    text-align: center 
+}
+
+.clueBox { 
+    background-color: rgb(109, 236, 109);
+    display: flex;
+    border-radius: 25px; 
+    height: 100px;
+    width: 200px;
+    align-items: center;
+    align-content: space-around;
+    border: 10px black;
+}
