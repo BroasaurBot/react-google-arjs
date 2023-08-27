@@ -1,5 +1,6 @@
 import React from 'react'
 import {auth, db} from '../firebase';
+import "./css/clues.css";
 import { onAuthStateChanged } from 'firebase/auth';
 import { useState, useEffect } from 'react';
 import { doc, onSnapshot } from 'firebase/firestore';
@@ -9,9 +10,15 @@ import markers from '../info.js';
 function MarkerInfo(props) {
   return (
     <li key={props.marker.id}>
-      <h3>{props.marker.name}</h3>
-      <h2>{props.collected.includes(props.marker.id) ? 'Collected' : 'Not Collected'}</h2>
-      <p>{props.marker.info}</p>
+      <h2>{props.collected.includes(props.marker.id) ? 
+      <div className = "greenBox">
+        <h3>{props.marker.name}</h3>
+        <p>{props.marker.info}</p>
+      </div> :
+      <div className = "redBox">
+        <h3>{props.marker.name}</h3>
+        <p>{props.marker.info}</p>
+      </div> }</h2>
     </li>
   )
 }
@@ -38,11 +45,13 @@ function Clues() {
   }, [user]);
 
   return (
-    <div>
-      <h1>Welcome to the Clues</h1>
+    <div className='centeralBox'>
+      <div className='yellowBox'>
+      <h1>Clues</h1>
       { user && <h2>Welcome, {user.displayName}</h2>}
 
-      <p>Below are the clues to help you find the markers</p>
+      <p>Below are the clues to help you find the markers, green indicating you have already collected the item</p>
+      </div>
       <ul>
         {markers.map((marker) => {
           return (

@@ -1,14 +1,53 @@
-h1 { 
-    text-align: center 
+h2 { 
+    text-align: center ;
+    font-weight: 100
 }
 
-.clueBox { 
-    background-color: rgb(109, 236, 109);
-    display: flex;
+.centeralBox{
+    vertical-align: auto;
+    align-items: auto;
+    padding: 10px;
+    
+    display: flexbox;
+    align-content: space-around;
+}
+
+.yellowBox { 
+    background-color:#facc15 ;
+    padding : 10px;   
+    display: flexbox;
     border-radius: 25px; 
-    height: 100px;
-    width: 200px;
+    height: 50px;
+    width: 50%;
+    align-items: center;
+    text-align: center;
+    align-content: space-around;
+    border: 20px solid black;
+}
+.greenBox { 
+    background-color: #84cc16 ;
+    padding : 10px;   
+    display: flex-col;
+    border-radius: 25px; 
+    height: 90px;
+    width: 87%;
     align-items: center;
     align-content: space-around;
-    border: 10px black;
+    border: 20px solid black;
+}
+
+ul{
+    list-style-type: none;
+}
+
+.redBox { 
+    background-color: #ef4444;
+    padding : 10px;
+    display: flex-col;
+    border-radius: 25px; 
+    height: 90px;
+    width: 87%;
+    align-items: center;
+    align-content: space-around;
+    border: 20px solid black;
 }
