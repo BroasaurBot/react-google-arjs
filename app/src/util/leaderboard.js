@@ -43,6 +43,8 @@ async function getLeaderboard() {
 }
 
 async function addUserLeaderboard(userInfo) {
+    if (userInfo.points <= 500)
+        return;
     const snapdoc = await getDoc(doc(db, "leaderboard", userInfo.uid));
     if (snapdoc.exists()) {
         if (snapdoc.data().points !== userInfo.points) {
@@ -59,9 +61,30 @@ async function addUserLeaderboard(userInfo) {
     }
 }
 
+function getPosition(leaderboard, userInfo) {
+    let pos = leaderboardSize + 1;
+    let next = 0;
+    for(let i = 0; i < leaderboard.length; i++) {
+        if (userInfo.uid === leaderboard[i].uid) {
+            pos = i + 1;
+            if (i !== 0)
+                next = leaderboard[i-1].points - userInfo.points;
+        }
+    }
+
+    let status = "";
+    if (pos === 1) status = "GRAND"
+    else if (pos <= 5) status = "HIGH"
+    else if (pos  <= 10) status = "MEDIUM"
+    else if (pos <= 20) status = "LOW"
+    else status = "NONE";
+
+    return {pos:pos, next:next, status:status};
+}
 
 
 
 
-export { clearLeaderboard, createFakePlayers, removeFakePlayers, getLeaderboard, addUserLeaderboard}
+
+export { clearLeaderboard, createFakePlayers, removeFakePlayers, getLeaderboard, addUserLeaderboard, getPosition}
 

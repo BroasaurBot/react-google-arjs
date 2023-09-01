@@ -1,13 +1,16 @@
 import React from 'react'
-import { clearLeaderboard, createFakePlayers, removeFakePlayers, getLeaderboard, addUserLeaderboard } from '../util/leaderboard'
+import {getLeaderboard, addUserLeaderboard, getPosition } from '../util/leaderboard'
 import { auth, db } from '../firebase';
 import { doc, onSnapshot, query, collection } from 'firebase/firestore';
 import { onAuthStateChanged } from 'firebase/auth';
 import { useState, useEffect } from 'react';
 
+import './css/stats.css'
+
 function LeaderBoard(props) {
   let userInfo = props.userInfo;
   const [leaderboard, setLeaderboard] = useState(null);
+  const [position, setPosition] = useState({pos: -1, next: 0, status:"NONE"});
 
   useEffect(() => {
     const q = query(collection(db, "leaderboard"));
@@ -26,6 +29,7 @@ function LeaderBoard(props) {
     if (userInfo && leaderboard) {
       console.log("Adding user to leaderboard");
       addUserLeaderboard(userInfo);
+      setPosition(getPosition(leaderboard, userInfo)) 
     }
   }, [userInfo, leaderboard]);
     
@@ -41,6 +45,10 @@ function LeaderBoard(props) {
           )
         })}
       </ol>
+      <h2>Position</h2>
+      {position && <h3>You are currently in pos: {position.pos}</h3>}
+      {position && <h3>You are {position.next} behind the next player</h3>}
+      {position && <h3>You have the status: {position.status}</h3>}
     </div>
   )
 
@@ -72,13 +80,8 @@ function Stats() {
   }, [user]);
 
   return (
-    <div>
+    <div id="screen">
       <h1>Welcome to the Stats</h1>
-      <button onClick={() => clearLeaderboard()}>Clear the leaderboard</button>
-      <button onClick={() => createFakePlayers(25)}>Add fake players</button>
-      <button onClick={() => removeFakePlayers()}>Remove fake players</button>
-      <button onClick={() => console.log(getLeaderboard())}>Print Leaderboard</button>
-
       { user && <h2>Welcome, {user.displayName}</h2>}
       { userInfo && <h2>You have {userInfo.points} points</h2>}
 
